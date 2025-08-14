@@ -46,7 +46,7 @@
         $stmt->execute([$username,$fullname,$email,$hashedPassword]);
 
         //ถ้าบันทึกสำเร็จให้เปลี่ยนเส้นทางไปหน้าล็อคอิน
-        header("Location login.php?register=success");
+        header("Location: login.php?register=success");
         exit();
     }
 
