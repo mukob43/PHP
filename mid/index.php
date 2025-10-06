@@ -4,10 +4,10 @@ require_once 'config.php';
 
 
 if (isset($_GET['delete'])) {
-    $product_id = $_GET['delete'];
-    $stmt = $conn->prepare("DELETE FROM products WHERE std_id = ?");
-    $stmt->execute([$product_id]);
-    header("Location: index.php");
+    $std_id = $_GET['delete'];
+    $stmt = $conn->prepare("DELETE FROM `tb6646_036` WHERE `key` = ?");
+    $stmt->execute([$std_id]);
+    header("Location:index.php?deleted=success");
     exit;
 }
 
@@ -79,8 +79,12 @@ $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <td><?= htmlspecialchars($student['created_at']) ?></td>
                         <td>
                             <a href="edit_index.php?key=<?= $student['key'] ?>" class="btn btn-sm btn-warning">แก้ไข</a>
-                            <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"
-                                data-id="<?= $student['key'] ?>">ลบ</a>
+                            <a href="index.php?delete=<?= $student['key'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('คุณต้องการลบข้อมูลนี้ใช่หรือไม่?');">
+ลบ</a>
+                    
+
+
+
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -92,20 +96,6 @@ $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <script src="https://cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
 
 
-    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">ยืนยันการลบ</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="ปิด"></button>
-                </div>
-                <div class="modal-body">
-                    คุณต้องการลบข้อมูลนี้ใช่หรือไม่?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
-                    <a id="deleteProductLink" href="#" class="btn btn-danger">ยืนยันการลบ</a>
-                </div>
             </div>
         </div>
     </div>
